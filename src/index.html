@@ -24,11 +24,16 @@
 					<h1 class="text-center">Fair Data Exchange</h1>
 					<hr />
 					<br />
+					<button class="enableEthereumButton">Enable Ethereum</button>
+					<div id="loader">
+						<p class="text-center">Loading...</p>
+					</div>
 				</div>
 			</div>
 
-			<div id="petsRow" class="row">
-				<!-- PETS LOAD HERE -->
+			<p id="accountAddress" class="text-center"></p>
+			<div id="content" class="row">
+				<!-- content loads here -->
 			</div>
 		</div>
 
@@ -48,13 +53,18 @@
 							data-holder-rendered="true"
 						/>
 						<br /><br />
-						<strong>Breed</strong>:
+						<strong>Proof</strong>:
 						<span class="pet-breed">Golden Retriever</span><br />
-						<strong>Age</strong>: <span class="pet-age">3</span><br />
-						<strong>Location</strong>:
-						<span class="pet-location">Warren, MI</span><br /><br />
-						<button class="btn btn-default btn-adopt" type="button" data-id="0">
-							Adopt
+						<strong>Price</strong>: <span class="pet-age">3</span><br />
+						<button
+							class="btn btn-default btn-download"
+							type="button"
+							data-id="0"
+						>
+							Download
+						</button>
+						<button class="btn btn-default btn-pay" type="button" data-id="0">
+							Pay
 						</button>
 					</div>
 				</div>
