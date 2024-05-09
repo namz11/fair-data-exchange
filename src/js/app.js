@@ -91,16 +91,18 @@ App = {
 				for (var i = 1; i <= dataCount; i++) {
 					verifyInstance.allData(i).then(function (data) {
 						petTemplate.find('.panel-title').text(data[2]);
-						// petTemplate.find('img').attr('src', data[i]);
-						petTemplate.find('.pet-breed').text(data[5]);
-						petTemplate.find('.pet-age').text(data[3]);
+						petTemplate.find('img').attr('src', data[5]);
+						petTemplate.find('.pet-age').text(`${+(data[3] / 1e18)} Eth`);
+
 						petTemplate.find('.btn-download').attr('data-id', data[0]);
 						petTemplate.find('.btn-download').attr('data-seller', data[1]);
 						petTemplate.find('.btn-download').attr('data-url', data[4]);
 						petTemplate.find('.btn-download').attr('data-price', data[3]);
+
 						petTemplate.find('.btn-pay').attr('data-id', data[0]);
 						petTemplate.find('.btn-pay').attr('data-seller', data[1]);
 						petTemplate.find('.btn-pay').attr('data-price', data[3]);
+
 						content.append(petTemplate.html());
 					});
 				}
@@ -140,15 +142,14 @@ App = {
 		event.preventDefault();
 
 		var id = parseInt($(event.target).data('id'));
-		var url = parseInt($(event.target).data('url'));
-		var seller = parseInt($(event.target).data('seller'));
+		var url = $(event.target).data('url');
+		var seller = $(event.target).data('seller');
 		var price = parseInt($(event.target).data('price'));
-
 		window.open(url, '_blank');
 
 		App.contracts.Verify.deployed()
 			.then(function (instance) {
-				return instance.createPurchaseOrder(+price, seller, {
+				return instance.createPurchaseOrder(price, seller, {
 					from: App.currentAccount,
 				});
 			})
@@ -164,7 +165,7 @@ App = {
 		event.preventDefault();
 
 		var id = parseInt($(event.target).data('id'));
-		var seller = parseInt($(event.target).data('seller'));
+		var seller = $(event.target).data('seller');
 		var price = parseInt($(event.target).data('price'));
 
 		App.contracts.Verify.deployed()

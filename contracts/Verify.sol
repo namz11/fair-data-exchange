@@ -13,7 +13,7 @@ contract Verify {
         string name;
         uint256 price;
         string url;
-        string proof;
+        string pic;
     }
 
     // We assume that for a given seller - buyer pair , there is only a single purchase at any given time
@@ -24,41 +24,43 @@ contract Verify {
     mapping(uint => DataInfo) public allData; // Store data
     uint public dataCount; // Store data Count
 
+    string private passpharse = "abc123";
+
     constructor() public {
         addData(
             0x284271e5A5bCA5a0f9026f5B28145c83d9E6410F,
-            "Stevens Graduate Student DB",
+            "AAPL Stock Data",
             20 * 1e18,
-            "https://drive.google.com/file/d/1n2JanYg9-d7N1GZhN-lbb5Cl4d8gMKJr/view?usp=drive_link",
-            "this is proof"
+            "https://www.dropbox.com/scl/fo/m12nh4txcdfpeu25es7hh/AA5-GoJEPftZN5q1ZgbDFOk?rlkey=n149i6h1k4kzg85k2992enugh&dl=0",
+            "https://pngimg.com/uploads/apple_logo/apple_logo_PNG19688.png"
         );
         addData(
             0xC83DBdC717581c5B36585beCaA463f4d644d7AFA,
-            "Stevens Undergraduate Student DB",
+            "ABNB Stock Data",
             30 * 1e18,
-            "https://drive.google.com/file/d/1n2JanYg9-d7N1GZhN-lbb5Cl4d8gMKJr/view?usp=drive_link",
-            "this is proof"
+            "https://www.dropbox.com/scl/fo/919tx35edpjmj7bypd0sx/AIyGUHb9q4fnCWglo0wNwzw?rlkey=rzkseghz317b3oywxnn3dbyp9&dl=0",
+            "https://cdn.dribbble.com/users/5068307/screenshots/10877145/media/539577a493c56679cac2f9fdf69172cb.gif"
         );
         addData(
             0x284271e5A5bCA5a0f9026f5B28145c83d9E6410F,
-            "Stevens Faculty DB",
+            "MSFT Stock Data",
             40 * 1e18,
-            "https://drive.google.com/file/d/1n2JanYg9-d7N1GZhN-lbb5Cl4d8gMKJr/view?usp=drive_link",
-            "this is proof"
+            "https://www.dropbox.com/scl/fo/w5sbpk9zdtlvw609t6nv9/AH9-ec6DJf-Lppd3_VgTF_w?rlkey=kbdtee4p0vfinne2goi7shcaa&dl=0",
+            "https://banner2.cleanpng.com/20180320/dwq/kisspng-microsoft-windows-logo-scalable-vector-graphics-microsoft-new-logo-simple-5ab0cf05df0f18.2010910315215367739137.jpg"
         );
         addData(
             0xC83DBdC717581c5B36585beCaA463f4d644d7AFA,
-            "Stevens Indian Student DB",
+            "TSLA Stock Data",
             50 * 1e18,
-            "https://drive.google.com/file/d/1n2JanYg9-d7N1GZhN-lbb5Cl4d8gMKJr/view?usp=drive_link",
-            "this is proof"
+            "https://www.dropbox.com/scl/fo/tm0u7v0l3gwjkdhehc01v/APz-NBANzMexvzXAeQ-38XY?rlkey=budktpugmyvm2srcaacpv6rpr&dl=0",
+            "https://i.pinimg.com/564x/ed/64/13/ed641311d15fe898726224072c2da65e.jpg"
         );
         addData(
             0x284271e5A5bCA5a0f9026f5B28145c83d9E6410F,
-            "Stevens Staff DB",
+            "UBER Stock Data",
             60 * 1e18,
-            "https://drive.google.com/file/d/1n2JanYg9-d7N1GZhN-lbb5Cl4d8gMKJr/view?usp=drive_link",
-            "this is proof"
+            "https://www.dropbox.com/scl/fo/c3ar4v4nggpcn0c7a4f96/ADWD75OlMrdRm_ES_F04llM?rlkey=sf37kaj6cpa4f4qhahk3ss44l&dl=0",
+            "https://1000logos.net/wp-content/uploads/2021/04/Uber-logo.png"
         );
     }
 
@@ -67,17 +69,10 @@ contract Verify {
         string memory name,
         uint256 price,
         string memory url,
-        string memory proof
+        string memory pic
     ) private {
         dataCount++;
-        allData[dataCount] = DataInfo(
-            dataCount,
-            seller,
-            name,
-            price,
-            url,
-            proof
-        );
+        allData[dataCount] = DataInfo(dataCount, seller, name, price, url, pic);
     }
 
     // Events
@@ -131,8 +126,9 @@ contract Verify {
         orderBook[_seller][_buyer].ongoingPurchase = false;
 
         withdrawPayment(_seller);
+
         // There is no need to store the secret key in storage
-        emit BroadcastSecKey(_seller, _buyer, "abc123");
+        emit BroadcastSecKey(_seller, _buyer, passpharse);
     }
 
     // This function allocates funds to the server from previous accrued purchase incomes
