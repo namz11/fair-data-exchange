@@ -20,7 +20,6 @@ contract Verify {
     // Maps seller ( server addresses ) to buyer ( client addresses ) which in turn are mapped to tx details
     mapping(address => mapping(address => agreedPurchase)) public orderBook; // Privacy is out of scope for now
     mapping(address => uint256) balances; // stores the Eth balances of sellers
-
     mapping(uint => DataInfo) public allData; // Store data
     uint public dataCount; // Store data Count
 
@@ -87,8 +86,6 @@ contract Verify {
         string _secKey
     );
 
-    // Agreed price could be set by the contract akin to Uniswap whereby price would be dynamically changing
-    // according to a constant product formula given the current number of sellers and buyers ( assuming that each tx in the orderBook has the same volume )
     function createPurchaseOrder(uint256 _agreedPrice, address _seller) public {
         require(
             !orderBook[_seller][msg.sender].ongoingPurchase,

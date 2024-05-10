@@ -1,7 +1,7 @@
 App = {
 	web3Provider: null,
 	contracts: {},
-	currentAccount: '0x0',
+	currentAccount: '',
 
 	init: async function () {
 		return await App.initWeb3();
@@ -73,9 +73,11 @@ App = {
 
 	render: function () {
 		var loader = $('#loader');
+		var msg = $('#msg');
 		var content = $('#content');
 
 		loader.show();
+		msg.hide();
 		content.hide();
 
 		// Load contract data
@@ -108,7 +110,13 @@ App = {
 				}
 
 				loader.hide();
-				content.show();
+				if (App.currentAccount == null || App.currentAccount?.trim() == '') {
+					msg.show();
+					content.hide();
+				} else {
+					msg.hide();
+					content.show();
+				}
 			})
 			.catch(function (error) {
 				console.warn(error);
